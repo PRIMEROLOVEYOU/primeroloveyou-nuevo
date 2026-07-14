@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRIMERO LOVE YOU | El hijo del mañana</title>
+  <meta name="description" content="Web oficial de PRIMERO LOVE YOU: El hijo del mañana. Romance contemporáneo, ciencia ficción y suspense emocional ambientado en Málaga." />
+  <meta name="theme-color" content="#07070b" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.7"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.26.10/babel.min.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.3.1",
+        "react/": "https://esm.sh/react@18.3.1/",
+        "react-dom": "https://esm.sh/react-dom@18.3.1",
+        "react-dom/": "https://esm.sh/react-dom@18.3.1/",
+        "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.474.0?external=react"
+      }
+    }
+  </script>
+  <style>
+    html{scroll-behavior:smooth}
+    body{background:#07070b;color:#f4f4f5}
+    .glass{backdrop-filter:blur(16px);background:rgba(255,255,255,.06)}
+    .hero-mask{background:linear-gradient(180deg,rgba(7,7,11,.15) 0%,rgba(7,7,11,.62) 55%,rgba(7,7,11,1) 100%)}
+    .gold-text{background:linear-gradient(90deg,#f7e6a1,#d9b96e,#f9efd1);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .ring{box-shadow:0 0 0 1px rgba(255,255,255,.08),0 16px 60px rgba(0,0,0,.35)}
+    .chapter{font-family:Georgia,'Times New Roman',serif;font-size:1.05rem;line-height:2;color:#d4d4d8;text-align:justify;hyphens:auto}
+    .chapter p + p{margin-top:1.1rem}
+    .loc{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:#a1a1aa;border-left:2px solid #d9b96e;padding-left:.75rem;margin-bottom:1rem}
+    .img-card{overflow:hidden;border-radius:1.5rem;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04)}
+    .img-card img{width:100%;height:100%;object-fit:cover;display:block}
+    .mobile-menu{display:none}
+    .mobile-menu.open{display:flex}
+  </style>
+</head>
+<body class="selection:bg-amber-300 selection:text-black">
+  <div id="root"></div>
+
+  <script type="text/babel" data-type="module" data-presets="react">
+    import React, { useState } from 'react';
+    import { createRoot } from 'react-dom/client';
+    import {
+      Menu,
+      X,
+      ArrowRight,
+      BookOpen,
+      Star,
+      Play,
+      MapPin,
+      Mail,
+      Instagram,
+      Facebook,
+      Youtube,
+      Music2,
+      Quote,
+    } from 'lucide-react';
+
+    const heroImg = 'https://cms.aikit.es/api/assets/6a551d87cf0f50d33f8c9a53/download';
+    const authorImg = 'https://cms.aikit.es/api/tools/threads/6a551cc0cf0f50d33f8c7814/file/6a551cc0cf0f50d33f8c7814_autor.jpg?token=tZQ6_Po7dNBH8x0pldJCyP-p7mKaXxolYlWr_Js7xuI&exp=1784034308';
+    const synopsisLeft = 'https://cms.aikit.es/api/assets/6a5522a6cf0f50d33f8d03ab/download';
+    const synopsisRight = 'https://cms.aikit.es/api/assets/6a5522a5cf0f50d33f8d03a6/download';
+    const bookImg = heroImg;
+
+    const gallery = [
+      { src: 'assets/galeria-1.jpg.jpeg', alt: 'Presentación 1' },
+      { src: 'assets/galeria-2.jpg.jpg', alt: 'Presentación 2' },
+      { src: 'assets/galeria-3.jpg.jpg', alt: 'Presentación 3' },
+      { src: 'assets/galeria4_.jpg.jpeg', alt: 'Presentación 4' },
+      { src: 'assets/galeria-5.jpg.jpeg', alt: 'Presentación 5' },
+      { src: 'assets/galeria-6.jpg.jpg', alt: 'Presentación 6' },
+      { src: 'assets/galeria-7.jpg.jpeg', alt: 'Presentación 7' },
+    ];
+
+    const characters = [
+      { src: 'assets/personaje-01.jpg', alt: 'Personaje 1' },
+      { src: 'assets/personaje-1.jpg.jpg', alt: 'Personaje 2' },
+      { src: 'assets/personaje-2.jpg.jpg', alt: 'Personaje 3' },
+      { src: 'assets/personaje-3.jpg.jpg', alt: 'Personaje 4' },
+      { src: 'assets/personaje-4.jpg.jpg', alt: 'Personaje 5' },
+      { src: 'assets/personaje-5.jpg.jpg', alt: 'Personaje 6' },
+      { src: 'assets/personaje-6.jpg.png', alt: 'Personaje 7' },
+      { src: 'assets/personaje-8.jpg.jpg', alt: 'Personaje 8' },
+      { src: 'assets/personaje-9.jpg.jpg', alt: 'Personaje 9' },
+      { src: 'assets/personaje-10.png', alt: 'Personaje 10' },
+      { src: 'assets/personaje-11.jpg', alt: 'Personaje 11' },
+      { src: 'assets/personaje-12.png', alt: 'Personaje 12' },
+      { src: 'assets/personaje-13.png', alt: 'Personaje 13' },
+    ];
+
+    function SectionTitle({ eyebrow, title, subtitle }) {
+      return (
+        <div className="max-w-3xl">
+          <p className="text-[11px] tracking-[0.35em] uppercase text-amber-300/80 mb-3">{eyebrow}</p>
+          <h2 className="text-3xl md:text-5xl font-semibold text-white leading-tight">{title}</h2>
+          {subtitle && <p className="mt-4 text-zinc-300 text-base md:text-lg leading-relaxed">{subtitle}</p>}
+        </div>
+      );
+    }
+
+    function App() {
+      const [menuOpen, setMenuOpen] = useState(false);
+      const [tab, setTab] = useState('dedicatoria');
+
+      const menuItems = [
+        { href: '#autor', label: 'Autor' },
+        { href: '#sinopsis', label: 'Sinopsis' },
+        { href: '#novela', label: 'La novela' },
+        { href: '#leer', label: 'Leer gratis' },
+        { href: '#galeria', label: 'Galería' },
+        { href: '#personajes', label: 'Personajes' },
+        { href: '#video', label: 'Vídeo' },
+        { href: '#resenas', label: 'Reseñas' },
+        { href: '#contacto', label: 'Contacto' },
+      ];
+
+      return (
+        <div className="min-h-screen bg-[#07070b] text-zinc-100 selection:bg-amber-300 selection:text-black">
+          <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[#09090f]/85 backdrop-blur-xl">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-4">
+              <a href="#inicio" className="flex items-center gap-3 shrink-0">
+                <div className="w-9 h-9 rounded-full border border-amber-300/35 bg-white/5 flex items-center justify-center text-amber-300 text-lg">✦</div>
+                <div className="hidden sm:block">
+                  <p className="text-sm font-semibold tracking-wide">PRIMERO LOVE YOU</p>
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-zinc-400">Trilogía oficial</p>
+                </div>
+              </a>
+
+              <nav className="hidden lg:flex items-center gap-4 text-sm text-zinc-300">
+                {menuItems.slice(0, 8).map((item) => (
+                  <a key={item.href} href={item.href} className="hover:text-white transition-colors">{item.label}</a>
+                ))}
+                <a href="#comprar" className="inline-flex items-center gap-1.5 rounded-full border border-amber-300/30 bg-amber-300/10 px-3 py-1.5 text-amber-100 hover:bg-amber-300/15 transition-colors">
+                  <MapPin className="w-4 h-4" /> Málaga físico
+                </a>
+              </nav>
+
+              <div className="flex items-center gap-3">
+                <a href="https://www.amazon.es/dp/B0H12QX4HW" target="_blank" rel="noreferrer" className="hidden md:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-300 to-amber-200 px-4 py-2 text-sm font-semibold text-black hover:from-amber-200 hover:to-amber-100 transition-colors">
+                  Comprar
+                </a>
+                <button className="lg:hidden w-10 h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white" onClick={() => setMenuOpen((v) => !v)} aria-label="Abrir menú">
+                  {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                </button>
+              </div>
+            </div>
+
+            <div className={`mobile-menu lg:hidden flex-col border-t border-white/10 bg-[#09090f]/96 px-4 py-4 gap-3 text-sm text-zinc-300 ${menuOpen ? 'open' : ''}`}>
+              {menuItems.map((item) => (
+                <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="hover:text-white">{item.label}</a>
+              ))}
+            </div>
+          </header>
+
+          <main className="pt-16">
+            <section id="inicio" className="relative min-h-[100svh] flex items-end">
+              <img src={heroImg} alt="Portada PRIMERO LOVE YOU" className="absolute inset-0 h-full w-full object-cover" />
+              <div className="absolute inset-0 hero-mask" />
+              <div className="relative max-w-7xl mx-auto w-full px-4 md:px-6 py-20 md:py-24">
+                <div className="max-w-4xl">
+                  <p className="text-[11px] md:text-xs uppercase tracking-[0.4em] text-amber-200/85 mb-5">Web oficial · Libro I · Experiencia cinematográfica</p>
+                  <h1 className="text-4xl sm:text-5xl md:text-7xl font-semibold leading-[0.95] tracking-tight text-white">
+                    PRIMERO LOVE YOU
+                    <span className="block gold-text mt-2">El hijo del mañana</span>
+                  </h1>
+                  <div className="mt-7 max-w-3xl glass rounded-3xl border border-white/10 p-6 md:p-8 ring">
+                    <p className="text-xl md:text-3xl leading-tight text-white font-medium flex items-start gap-3">
+                      <Quote className="w-6 h-6 mt-1 text-amber-200 shrink-0" />
+                      <span>«Echar de menos a alguien que no conoces es una forma de locura que no tiene diagnóstico.»</span>
+                    </p>
+                  </div>
+                  <div className="mt-8 flex flex-col sm:flex-row gap-3">
+                    <a href="#leer" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-black hover:bg-zinc-100 transition-colors">
+                      <BookOpen className="w-4 h-4" /> Leer capítulos gratis
+                    </a>
+                    <a href="https://www.amazon.es/dp/B0H12QX4HW" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/8 px-6 py-3 font-semibold text-white hover:bg-white/14 transition-colors">
+                      Comprar en Amazon
+                    </a>
+                    <a href="#resenas" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 font-semibold text-zinc-100 hover:bg-white/10 transition-colors">
+                      <Star className="w-4 h-4 text-amber-300" /> Ver reseñas
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="autor" className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28">
+              <div className="grid lg:grid-cols-[0.9fr,1.1fr] gap-10 md:gap-14 items-center">
+                <div className="img-card ring max-w-md mx-auto lg:mx-0">
+                  <img src={authorImg} alt="Christian C. D'Rosoy" loading="lazy" />
+                </div>
+                <div>
+                  <SectionTitle eyebrow="Sobre el autor" title="Christian C. D'Rosoy" subtitle="Una voz narrativa con identidad propia, sensibilidad contemporánea y una forma de contar que mezcla emoción, tensión, misterio y mirada cinematográfica." />
+                  <div className="grid sm:grid-cols-2 gap-4 mt-8">
+                    {[
+                      ['Romance emocional', 'Historias que conectan desde la herida.'],
+                      ['Mirada cinematográfica', 'Ritmo visual y escenas potentes.'],
+                      ['Málaga como latido', 'La ciudad forma parte del alma del relato.'],
+                      ['Proyecto en expansión', 'Web pensada para libro, vídeo, redes y nuevos lanzamientos.'],
+                    ].map(([title, text]) => (
+                      <div key={title} className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                        <p className="font-semibold text-white">{title}</p>
+                        <p className="mt-2 text-sm text-zinc-300 leading-relaxed">{text}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="sinopsis" className="border-y border-white/10 bg-white/[0.03]">
+              <div className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28">
+                <SectionTitle eyebrow="Sinopsis" title="La historia comienza con una frase imposible" subtitle="Christian Herrmann vive una vida aparentemente normal hasta que un niño se presenta en su mundo llamándole papá y pronunciando una frase que lo cambia todo: «Todavía no ha pasado»." />
+                <div className="mt-10 grid md:grid-cols-2 gap-5 items-start">
+                  <figure className="img-card ring">
+                    <img src={synopsisLeft} alt="Málaga también es ficción" loading="eager" />
+                    <figcaption className="px-5 py-4 text-sm tracking-wide uppercase text-amber-200/90 border-t border-white/10 bg-black/35">Málaga también es ficción</figcaption>
+                  </figure>
+                  <figure className="img-card ring">
+                    <img src={synopsisRight} alt="¿Quién es CC2?" loading="eager" />
+                    <figcaption className="px-5 py-4 text-sm tracking-wide uppercase text-amber-200/90 border-t border-white/10 bg-black/35">¿Quién es CC2?</figcaption>
+                  </figure>
+                </div>
+                <div className="mt-8 rounded-[2.15rem] border border-amber-300/18 bg-[linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.03))] p-6 md:p-10 ring shadow-2xl shadow-black/20">
+                  <div className="mx-auto max-w-3xl chapter text-left text-zinc-300">
+                    <p className="text-xl md:text-2xl font-semibold leading-tight text-white mb-6">¿Qué harías si un niño desconocido te abrazara llorando... y te llamara papá?</p>
+                    <p className="text-xl md:text-2xl font-semibold leading-tight text-white mb-6">¿Y si supiera cosas sobre tu vida que todavía no han ocurrido?</p>
+                    <p className="text-xl md:text-2xl font-semibold leading-tight text-white mb-0">¿Y si el amor de tu vida ya hubiera vivido esta historia antes que tú?</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="novela" className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28">
+              <div className="grid lg:grid-cols-[0.9fr,1.1fr] gap-12 items-center">
+                <div className="img-card ring">
+                  <img src={bookImg} alt="Libro I" loading="lazy" />
+                </div>
+                <div>
+                  <SectionTitle eyebrow="La novela" title="Libro I — El hijo del mañana" subtitle="¿Qué harías si un niño apareciera en tu vida asegurando ser tu hijo… y lo más aterrador fuera descubrir que dice la verdad? PRIMERO LOVE YOU abre una historia donde el amor, el tiempo y lo imposible se miran de frente." />
+                  <div className="grid sm:grid-cols-2 gap-4 mt-8">
+                    {[
+                      ['Amor', 'El centro emocional de una historia intensa.'],
+                      ['Tiempo', 'Pasado, presente y futuro empujando en la misma dirección.'],
+                      ['Misterio', 'Nada es exactamente lo que parece.'],
+                      ['Málaga', 'Una atmósfera real y evocadora.'],
+                    ].map(([title, text]) => (
+                      <div key={title} className="rounded-3xl border border-white/10 bg-black/20 p-5">
+                        <p className="font-semibold text-white">{title}</p>
+                        <p className="mt-2 text-sm text-zinc-300">{text}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="leer" className="border-y border-white/10 bg-white/[0.03]">
+              <div className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28">
+                <SectionTitle eyebrow="Leer gratis" title="Dedicatoria, prólogo y capítulos de muestra" subtitle="Un recorrido breve por el arranque editorial de la novela." />
+                <div className="mt-10 rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 md:p-6 ring">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {[
+                      ['dedicatoria', 'Dedicatoria'],
+                      ['prologo', 'Prólogo'],
+                      ['cap1', 'Capítulo 1 · Todavía no ha pasado'],
+                      ['cap2', 'Capítulo 2 · La grieta'],
+                      ['cap3', 'Capítulo 3 · El código'],
+                      ['cap4', 'Capítulo 4 · El pulso del pasado'],
+                    ].map(([id, label]) => (
+                      <button key={id} onClick={() => setTab(id)} className={`rounded-2xl border px-4 py-3 text-left text-sm transition-colors ${tab === id ? 'border-amber-300/40 bg-amber-300/10 text-amber-100' : 'border-white/10 bg-black/20 text-zinc-200 hover:bg-white/8'}`}>
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-8 rounded-[2rem] overflow-hidden border border-white/10 ring">
+                  <div className="px-6 md:px-10 py-6 bg-gradient-to-r from-black/70 to-zinc-900/70 border-b border-white/10">
+                    <span className="inline-flex rounded-full border border-amber-300/30 bg-amber-300/10 px-3 py-1 text-xs uppercase tracking-[0.25em] text-amber-200">Muestra editorial</span>
+                    <h3 className="mt-3 text-2xl md:text-3xl font-semibold text-white">
+                      {tab === 'dedicatoria' && 'Dedicatoria'}
+                      {tab === 'prologo' && 'Prólogo'}
+                      {tab === 'cap1' && 'Capítulo 1 — Todavía no ha pasado'}
+                      {tab === 'cap2' && 'Capítulo 2 — La grieta'}
+                      {tab === 'cap3' && 'Capítulo 3 — El código'}
+                      {tab === 'cap4' && 'Capítulo 4 — El pulso del pasado'}
+                    </h3>
+                    <p className="mt-2 loc">
+                      {tab === 'cap1' && 'Lunes · 08:15 h · Calle La Unión · Málaga · 2026'}
+                      {tab === 'cap2' && 'Lunes · 10:55 h · Colegio García Lorca'}
+                      {tab === 'cap3' && 'Lunes · 18:30 h · Calle La Unión'}
+                      {tab === 'cap4' && 'Lunes · 20:57 h · Calle La Unión'}
+                      {tab !== 'cap1' && tab !== 'cap2' && tab !== 'cap3' && tab !== 'cap4' && 'Apertura'}
+                    </p>
+                  </div>
+                  <div className="bg-[#0d0d15] px-6 md:px-14 py-10 md:py-14">
+                    <div className="max-w-2xl mx-auto chapter">
+                      {tab === 'dedicatoria' && (
+                        <>
+                          <p className="text-center italic">A la memoria de mi padre,</p>
+                          <p className="text-center italic">que me enseñó el valor del tiempo</p>
+                          <p className="text-center italic">antes de que yo entendiera que podía perderlo.</p>
+                        </>
+                      )}
+                      {tab === 'prologo' && (
+                        <>
+                          <p>«Echar de menos a alguien que no conoces es una forma de locura que no tiene diagnóstico». —CC</p>
+                          <p>Hay ausencias que no dejan fotografías. No tienen fecha ni entierro. Y, sin embargo, pesan más que los muertos con nombre.</p>
+                          <p>Durante años pensé que lo que me dolía era el pasado. Me equivoqué. Lo que me dolía era algo que aún no había ocurrido.</p>
+                        </>
+                      )}
+                      {tab === 'cap1' && (
+                        <>
+                          <p>Hay exactamente dos momentos en la vida de todo hombre en los que el tiempo se detiene de verdad: cuando alguien te dice que vas a ser padre y cuando te lo reclama un niño al que nunca has visto.</p>
+                          <p>El silencio en mi apartamento de la calle La Unión no era simple vacío. Era una entidad viva, pesada como el plomo fundido, instalada en cada rincón con la persistencia de un invitado no deseado.</p>
+                          <p>Al otro lado de la cristalera, Málaga se desperezaba bajo una luz pálida y cortante. La cafetera italiana, reliquia de mis días más optimistas, emitió su gorgoteo final. El café brotó negro como la brea. Espeso. Amargo. Sin azúcar.</p>
+                        </>
+                      )}
+                      {tab === 'cap2' && (
+                        <>
+                          <p>Bajé las escaleras con el dibujo doblado en el bolsillo interior de la chaqueta de piel: una granada a punto de detonar. Cada crujido del papel contra el cuero era un recordatorio punzante: aquello no había salido de mi cabeza.</p>
+                          <p>Silvia me miró con una calma inesperada. —A veces los niños son canales para cosas ajenas a la comprensión adulta —dijo con una sonrisa suave—. No ha parado de repetir que “papá siempre viene cuando lo necesito”.</p>
+                        </>
+                      )}
+                      {tab === 'cap3' && (
+                        <>
+                          <p>—¿Christian? ¿Todo bien, hijo? —preguntó mi madre al teléfono.</p>
+                          <p>—No, la verdad es que no. Ha pasado algo muy raro hoy. Un niño de segundo de primaria dice que soy su padre, me llamó papá y conocía mi apodo, CC.</p>
+                          <p>Al abrir la caja, el olor a naftalina inundó la habitación, mezclado con algo más: madera vieja, cuero y el rastro fantasma de la colonia de mi padre.</p>
+                        </>
+                      )}
+                      {tab === 'cap4' && (
+                        <>
+                          <p>El tatuaje seguía picándome. Decidí llamar a Annette, mi tatuadora de Ikigaink Experience. Contestó rápido, con esa voz que no había cambiado en quince años.</p>
+                          <p>—El diseño es el mismo —susurró—. El que hizo tu padre.</p>
+                          <p>—Hay cosas que no se explican antes de tiempo —recordé en voz baja—. Se activan cuando toca.</p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="galeria" className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28">
+              <SectionTitle eyebrow="Galería" title="Presentación del libro" subtitle="Fotos reales del evento de presentación." />
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mt-12">
+                {gallery.map((img) => (
+                  <a key={img.src} href={img.src} target="_blank" rel="noreferrer" className="group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/5">
+                    <img src={img.src} alt={img.alt} className="h-56 md:h-72 w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent"></div>
+                    <div className="absolute left-4 bottom-4"><span className="text-sm text-white font-medium">{img.alt}</span></div>
+                  </a>
+                ))}
+              </div>
+            </section>
+
+            <section id="personajes" className="border-y border-white/10 bg-white/[0.03]">
+              <div className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28">
+                <SectionTitle eyebrow="Personajes imaginados" title="Así podría verse el universo humano de la novela" subtitle="Una galería visual inspirada en los personajes de PRIMERO LOVE YOU." />
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mt-12">
+                  {characters.map((img) => (
+                    <a key={img.src} href={img.src} target="_blank" rel="noreferrer" className="group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/5">
+                      <img src={img.src} alt={img.alt} className="h-56 md:h-72 w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent"></div>
+                      <div className="absolute left-4 bottom-4"><span className="text-sm text-white font-medium">{img.alt}</span></div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <section id="video" className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28">
+              <SectionTitle eyebrow="Vídeo" title="Booktrailer / presentación" subtitle="Descubre el universo visual de PRIMERO LOVE YOU." />
+              <div className="mt-12 rounded-[2rem] overflow-hidden border border-white/10 bg-black/30 shadow-2xl shadow-black/30">
+                <div className="aspect-video w-full">
+                  <iframe className="w-full h-full" src="https://www.youtube.com/embed/ADlNpdwBY0o" title="Vídeo PRIMERO LOVE YOU" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                </div>
+              </div>
+              <div className="mt-5 flex flex-col sm:flex-row gap-3">
+                <a href="https://youtube.com/shorts/ADlNpdwBY0o" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/8 px-5 py-3 text-sm font-medium text-white hover:bg-white/14 transition-colors">
+                  <Play className="w-4 h-4" /> Abrir vídeo en YouTube
+                </a>
+              </div>
+            </section>
+
+            <section id="resenas" className="border-y border-white/10 bg-white/[0.03]">
+              <div className="max-w-7xl mx-auto px-4 md:px-6 py-20 md:py-28">
+                <div className="grid xl:grid-cols-[1.3fr,0.7fr] gap-10">
+                  <div>
+                    <SectionTitle eyebrow="Opiniones de lectores" title="Lo que dicen quienes lo han leído" subtitle="Reseñas verificadas de Amazon." />
+                    <div className="grid md:grid-cols-2 gap-4 mt-10">
+                      {[
+                        ['Jose Maria', '4 jul 2026', '¡Una joya de suspense y magnetismo!', 'Adictivo de principio a fin. Una mezcla perfecta de misterio, intriga y romance que no te deja soltar el libro.'],
+                        ['Alex', '22 may 2026', 'Me ha sorprendido muchísimo', 'La historia tiene misterio, drama y momentos que te dejan con ganas de seguir leyendo. Muy recomendable.'],
+                        ['Lola Perez Chia', '10 jun 2026', 'Capacidad de descripción', 'Me ha sorprendido gratamente la narrativa tan peculiar de este nuevo escritor. Esperando segunda parte.'],
+                        ['Noe', '30 may 2026', 'Un gran libro de un gran amigo', 'La historia comienza con fuerza, presentando personajes interesantes y una trama que despierta mucha curiosidad.'],
+                      ].map(([name, date, title, text]) => (
+                        <div key={`${name}-${date}`} className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                          <div className="flex gap-0.5 mb-2 text-amber-300"><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /></div>
+                          <p className="text-amber-300 text-sm font-semibold">{name}</p>
+                          <p className="text-zinc-500 text-xs mb-2">{date}</p>
+                          <p className="font-semibold text-white text-sm mb-1">{title}</p>
+                          <p className="text-sm text-zinc-300 leading-relaxed">{text}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                      <a href="https://www.amazon.es/dp/B0H12QX4HW" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-amber-300 px-6 py-3 font-semibold text-black hover:bg-amber-200 transition-colors">Comprar ahora en Amazon</a>
+                      <a href="https://www.amazon.es/dp/B0H12QX4HW" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/8 px-6 py-3 font-semibold text-white hover:bg-white/14 transition-colors">Ver todas las reseñas</a>
+                    </div>
+                  </div>
+                  <aside className="rounded-[2rem] border border-white/10 bg-gradient-to-b from-white/6 to-white/[0.03] p-6 md:p-8 h-fit ring">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/30 bg-amber-300/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.35em] text-amber-100"><MapPin className="w-4 h-4" /> Compra física en Málaga</div>
+                    <h3 className="mt-4 text-2xl font-semibold text-white">Librerías Proteo Prometeo</h3>
+                    <p className="mt-2 text-sm text-zinc-300">Tu ejemplar también puede comprarse físicamente en uno de los puntos libreros más reconocidos de Málaga.</p>
+                    <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-white/7 to-white/[0.03] p-5">
+                      <p className="font-semibold text-white">Dirección</p>
+                      <p className="text-sm text-zinc-300 mt-2 leading-relaxed">C. Prta Buenaventura, 3<br/>Distrito Centro, 29008 Málaga</p>
+                      <p className="text-sm text-zinc-300 mt-3">Teléfono: <a href="tel:+34952219019" className="text-amber-300 hover:underline">952 21 90 19</a></p>
+                    </div>
+                    <div className="mt-5 flex flex-col gap-3">
+                      <a href="https://www.google.com/maps/search/?api=1&query=Librerias+Proteo+Prometeo+Malaga" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-amber-300 to-amber-200 px-5 py-3 font-semibold text-black hover:from-amber-200 hover:to-amber-100 transition-colors">Ver en Google Maps</a>
+                      <a href="tel:+34952219019" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/8 px-5 py-3 font-semibold text-white hover:bg-white/14 transition-colors">Llamar ahora</a>
+                    </div>
+                  </aside>
+                </div>
+              </div>
+            </section>
+
+            <section id="contacto" className="border-t border-white/10 bg-black/20">
+              <div className="max-w-7xl mx-auto px-4 md:px-6 py-14">
+                <p className="text-[11px] tracking-[0.35em] uppercase text-amber-300/80 mb-3">Contacto y redes</p>
+                <h2 className="text-3xl md:text-5xl font-semibold text-white leading-tight">Christian C. D'Rosoy</h2>
+                <p className="mt-4 text-zinc-300 text-base md:text-lg leading-relaxed max-w-3xl">Correo y redes sociales oficiales del proyecto.</p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {[
+                    ['mailto:christiancdrosoy@hotmail.com', 'Correo', Mail],
+                    ['https://www.instagram.com/primeroloveyou_libro?igsh=YTJhOWJ6M2Fkc2Ru&utm_source=qr', 'Instagram', Instagram],
+                    ['https://www.facebook.com/share/g/163orYLTEDm/?mibextid=wwXIfr', 'Facebook', Facebook],
+                    ['https://www.tiktok.com/@primeroloveyou_libro?_r=1&_t=ZN-97yLDwzYbXn', 'TikTok', Music2],
+                    ['https://youtube.com/shorts/ADlNpdwBY0o', 'YouTube', Youtube],
+                  ].map(([href, label, Icon]) => (
+                    <a key={label} href={href} target={href.startsWith('mailto:') ? undefined : '_blank'} rel={href.startsWith('mailto:') ? undefined : 'noreferrer'} className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-white hover:bg-white/8 transition-colors">
+                      <Icon className="w-4 h-4" /> {label}
+                    </a>
+                  ))}
+                </div>
+                <div className="mt-10 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+                  <div>
+                    <p className="font-semibold text-white">© 2026 Christian C. D'Rosoy</p>
+                    <p className="text-sm text-zinc-400 mt-1">PRIMERO LOVE YOU · Libro I · Trilogía oficial · Ediciones 52.1 · Málaga, España</p>
+                  </div>
+                  <a href="#inicio" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-white hover:bg-white/8 transition-colors">
+                    <ArrowRight className="w-4 h-4 rotate-[-90deg]" /> Volver arriba
+                  </a>
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+      );
+    }
+
+    createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
